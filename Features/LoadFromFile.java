@@ -4,42 +4,47 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Data.Contact;
 import Data.ContactList;
 
 public class LoadFromFile implements Actions<String> {
+     private static Logger logger = Logger.getLogger(LoadFromFile.class.getName());
+
+     @Override
      public void showActionsInformation() {
-          System.out.println("\nУкажите файл для загрузки:\nДля воврата в меню введите 0");
      }
-     
+
      @Override
      public String readUserInput() {
-          Scanner scan = new Scanner(System.in);
-
-          while (true) {
-               System.out.println("");
-               System.out.print("Путь:");
-
-               String userInput = scan.nextLine();
-
-               return userInput;
-          }
+          return null;
      }
+
      @Override
      public void executeAction(String path) {
           try {
                Scanner scanner = new Scanner(new File(path));
                while (scanner.hasNextLine()) {
-                    String file = scanner.nextLine();
-                    //String[] parts = file.split(";");
-                    // Contact Contact = Contact.buildContact(parts[0], parts[1],parts[2],parts[3], parts[4]);
+                    try {
+                         String contactData = scanner.nextLine();
+
+                         if(!contactData.isEmpty()){
+                              ContactList.setContact(contactData);
+                         }
+                    } catch (Exception e) {
+                         logger.log(Level.SEVERE, "Exception: ", e);
+                    }
                }
                scanner.close();
                System.out.println("Данные из файла загружены!");
           } catch (FileNotFoundException e) {
                System.out.println("Путь или файл не существуют...");
+               logger.log(Level.SEVERE, "Exception: ", e);
 
+          } catch (Exception ex) {
+               logger.log(Level.SEVERE, "Exception: ", ex);
           }
 
      }

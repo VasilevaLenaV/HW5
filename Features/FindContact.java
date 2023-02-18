@@ -3,11 +3,16 @@ package Features;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Data.Contact;
 import Data.ContactList;
 
 public class FindContact implements Actions<Collection<Contact>> {
+    private static Logger logger = Logger.getLogger(FindContact.class.getName());
+
+    @Override
     public void showActionsInformation() {
         System.out.println("\nДля поиска контакта введите его данные\nВведите 0 для возрата в Меню\n");
     }
@@ -15,9 +20,9 @@ public class FindContact implements Actions<Collection<Contact>> {
     @Override
     public Collection<Contact> readUserInput() {
         while (true) {
-            System.out.print("\nВведите данные контакта для поиска:");
-            Scanner in = new Scanner(System.in);
             try {
+                System.out.print("\nВведите данные контакта для поиска:");
+                Scanner in = new Scanner(System.in);
                 String userInput = in.nextLine();
                 if (userInput != "") {
                     Collection<Contact> res = ContactList.findByContact(userInput);
@@ -27,21 +32,25 @@ public class FindContact implements Actions<Collection<Contact>> {
                     return res;
                 }
                 return new ArrayList<>();
-            } catch (Exception err) {
-                System.out.println("Введите данные контакта для поиска или 0 для возврата в Меню");
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Exception: ", e);
             }
         }
     }
 
     @Override
     public void executeAction(Collection<Contact> command) {
-        if (command.size() > 0) {
-            command.forEach(k -> {
-                System.out.printf("\nID: " + k.getId() + ", \nПолное имя: " + k.getName() + ", \nТелефон: "
-                        + k.getTels().toString() + "\nЭл. почта: "
-                        + k.getMails().toString() + ", \nГруппы: " + k.getGroup().toString()
-                        + "\n");
-            });
+        try {
+            if (command.size() > 0) {
+                command.forEach(k -> {
+                    System.out.printf("\nID: " + k.getId() + ", \nПолное имя: " + k.getName() + ", \nТелефон: "
+                            + k.getTels().toString() + "\nЭл. почта: "
+                            + k.getMails().toString() + ", \nГруппы: " + k.getGroup().toString()
+                            + "\n");
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 }

@@ -2,11 +2,15 @@ package Features;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Data.Contact;
 import Data.ContactList;
 
 public class EditContact implements Actions<String> {
+     private static Logger logger = Logger.getLogger(EditContact.class.getName());
+
      @Override
      public void showActionsInformation() {
           System.out.println(
@@ -20,22 +24,25 @@ public class EditContact implements Actions<String> {
           Scanner in = new Scanner(System.in);
 
           while (true) {
-               System.out.println("\nВведите контакт для редактирования:\n");
-               String userInput = in.nextLine();
+               try {
+                    System.out.println("\nВведите контакт для редактирования:\n");
+                    String userInput = in.nextLine();
 
-               if (!userInput.equals("0")) {
-                    if (ContactList.findByContact(userInput).isEmpty()) {
-                         System.out.println("\nВведите контакт для редактирования:\n");
+                    if (!userInput.equals("0")) {
+                         if (ContactList.findByContact(userInput).isEmpty()) {
+                              System.out.println("\nВведите контакт для редактирования:\n");
+                         } else {
+                              return userInput;
+                         }
                     } else {
                          return userInput;
                     }
-               } else {
-                    return userInput;
+               } catch (Exception e) {
+                    logger.log(Level.SEVERE, "Exception: ", e);
                }
           }
      }
 
-     
      @Override
      public void executeAction(String command) {
           List<Contact> Contacts = ContactList.findByContact(command);
@@ -48,7 +55,7 @@ public class EditContact implements Actions<String> {
                     System.out.printf("\nВведите Полное имя: ", t.getName());
                     userInput = scanner.nextLine();
 
-                    if (!userInput.equals("-") && !userInput.isEmpty()  && !userInput.equals(t.getName())) {
+                    if (!userInput.equals("-") && !userInput.isEmpty() && !userInput.equals(t.getName())) {
                          t.setName(userInput);
                     }
                     System.out.printf("\nВведите телефонный номер, который нужно заменить: %s\n",
@@ -77,9 +84,8 @@ public class EditContact implements Actions<String> {
                          t.replaceGroup(userInput, newGroup);
                     }
                } catch (Exception e) {
-                    System.out.println(e);
+                    logger.log(Level.SEVERE, "Exception: ", e);
                }
-
           });
 
           System.out.println("Обновление  успешно завершено");

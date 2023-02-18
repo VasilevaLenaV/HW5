@@ -19,7 +19,7 @@ import Features.FindContact;
 import Features.RemoveContact;
 import Features.SaveToFile;
 import Features.ViewContacts;
-import Features.Sorting.Sort.FullNameSorting;
+import Features.Sorting.FullNameSorting;
 
 public class ContactList {
      public static Map<UUID, Contact> contacts = new LinkedHashMap<>();
@@ -32,6 +32,46 @@ public class ContactList {
                int actionNumber = readAction();
                executeAction(actionNumber);
           }
+     }
+
+     public static void setContact(String contactData) {
+          String[] contactProperties = contactData.split(";");
+
+          if (contactProperties.length > 0) {
+               String contactId = contactProperties[0];
+               String contactName = contactProperties[1];
+               Collection<String> contactTels = Arrays.asList(contactProperties[2]);
+               Collection<String> contactMails = Arrays.asList(contactProperties[3]);
+               Collection<String> contactGroups = Arrays.asList(contactProperties[4]);
+
+               Collection<Contact> contacts = findByContact(contactName);
+               if (contacts.size() > 0) {
+                    contacts.forEach(c -> {
+                         contactTels.forEach(k -> {
+                              c.setTel(k);
+                         });
+                         contactMails.forEach(k -> {
+                              c.setMail(k);
+                         });
+                         contactGroups.forEach(k -> {
+                              c.setGroup(k);
+                         });
+                    });
+               } else {
+                    Contact contact = new Contact(UUID.fromString(contactId), contactName);
+                    contactTels.forEach(k -> {
+                         contact.setTel(k);
+                    });
+                    contactMails.forEach(k -> {
+                         contact.setMail(k);
+                    });
+                    contactGroups.forEach(k -> {
+                         contact.setGroup(k);
+                    });
+                    ContactList.contacts.put(UUID.randomUUID(), contact);
+               }
+          }
+
      }
 
      public static List<Contact> findByContact(String number) {
@@ -56,8 +96,8 @@ public class ContactList {
 
      public void executeAction(int actionNumber) {
           Runnable ContactsEmpty = () -> System.out.println("В списке контактов пусто");
+          String path = "contacts.txt";
 
-          Actions action;
           switch (actionNumber) {
                case Actions.ADD_CONTACT:
                     Actions<String[]> add = new AddContact();
@@ -121,11 +161,7 @@ public class ContactList {
                     if (contacts.size() > 0) {
 
                          Actions<String> saveOp = new SaveToFile();
-                         saveOp.showActionsInformation();
-                         String path = saveOp.readUserInput();
-
-                         if (!path.equals("0"))
-                              saveOp.executeAction(path);
+                         saveOp.executeAction(path);
                     } else {
                          ContactsEmpty.run();
                     }
@@ -133,11 +169,7 @@ public class ContactList {
 
                case Actions.LOAD_FROM_FILE:
                     Actions<String> loadOp = new LoadFromFile();
-                    loadOp.showActionsInformation();
-                    String path = loadOp.readUserInput();
-
-                    if (!path.equals("0"))
-                         loadOp.executeAction(path);
+                    loadOp.executeAction(path);
                     break;
 
                case Actions.EXIT:
