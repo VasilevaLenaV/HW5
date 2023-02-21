@@ -43,30 +43,30 @@ public class ContactList {
                Collection<String> contactTels = Arrays.asList(contactProperties[2]);
                Collection<String> contactMails = Arrays.asList(contactProperties[3]);
                Collection<String> contactGroups = Arrays.asList(contactProperties[4]);
-
                Collection<Contact> contacts = findByContact(contactName);
+
                if (contacts.size() > 0) {
                     contacts.forEach(c -> {
                          contactTels.forEach(k -> {
-                              c.setTel(k);
+                         c.getTels().setValue(k);
                          });
                          contactMails.forEach(k -> {
-                              c.setMail(k);
+                              c.mails.setValue(k);
                          });
                          contactGroups.forEach(k -> {
-                              c.setGroup(k);
+                              c.groups.setValue(k);
                          });
                     });
                } else {
                     Contact contact = new Contact(UUID.fromString(contactId), contactName);
                     contactTels.forEach(k -> {
-                         contact.setTel(k);
+                         contact.getTels().setValue(k);
                     });
                     contactMails.forEach(k -> {
-                         contact.setMail(k);
+                         contact.mails.setValue(k);
                     });
                     contactGroups.forEach(k -> {
-                         contact.setGroup(k);
+                         contact.groups.setValue(k);
                     });
                     ContactList.contacts.put(UUID.randomUUID(), contact);
                }

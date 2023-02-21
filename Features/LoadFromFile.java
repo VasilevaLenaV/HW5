@@ -2,25 +2,14 @@ package Features;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Data.Contact;
 import Data.ContactList;
 
 public class LoadFromFile implements Actions<String> {
      private static Logger logger = Logger.getLogger(LoadFromFile.class.getName());
-
-     @Override
-     public void showActionsInformation() {
-     }
-
-     @Override
-     public String readUserInput() {
-          return null;
-     }
 
      @Override
      public void executeAction(String path) {

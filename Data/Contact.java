@@ -1,18 +1,20 @@
 package Data;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.UUID;
 
-public class Contact {
+public class Contact  {
      private UUID id;
      private String name;
-     private Collection<String> tels = new ArrayList<>();
-     private Collection<String> mails = new ArrayList<>();
-     private Collection<String> groups = new ArrayList<>();
+     private ObjectData<String> tels = new ObjectData<String>();
+     ObjectData<String> mails = new ObjectData<String>();
+     ObjectData<String> groups = new ObjectData<String>();
      private Melody melody;
 
      public Contact() {
+     }
+    
+     public void setTels(ObjectData<String> tels) {
+          this.tels = tels;
      }
      public Contact(String name) {
           this.name = name;
@@ -25,22 +27,15 @@ public class Contact {
      public Contact(String name, String tel) {
           this.id = UUID.randomUUID();
           this.name = name;
-          setTel(tel);
+          tels.setValue(tel);
      }
 
-     public static Contact buildContact(String name, String tel, String mail,String group) {
-          Contact сontact = new Contact();
-
-          сontact.setId(UUID.randomUUID());
-          сontact.setName(name);
-          сontact.setTel(tel);
-          сontact.setMail(mail);
-          сontact.setGroup(group);
-          return сontact;
-     }
-
-     private void setId(UUID id) {
-          this.id = id;
+     public Contact(String name, String tel, String mail,String group) {
+          this.id = UUID.randomUUID();
+          this.name =name;
+          tels.setValue(tel);
+          mails.setValue(mail);
+          groups.setValue(group);
      }
 
      public UUID getId() {
@@ -63,51 +58,15 @@ public class Contact {
           return melody;
      }
 
-     public void setTel(String tel) {
-          if (!tels.contains(tel))
-               tels.add(tel);
-     }
-     public Collection<String> getTels() {
+     public ObjectData<String> getTels() {
           return tels;
      }
-     public void replaceTel(String oldTel, String tel) {
-          if ( tels.contains(oldTel))
-               tels.remove(oldTel);
 
-          setTel(tel);
-     }
-
-     
-
-     public void setMail(String mail) {
-          if (!mails.contains(mail))
-               mails.add(mail);
-     }
-
-     public Collection<String> getMails() {
+     public ObjectData<String> getMails() {
           return mails;
      }
-
-     public void replaceMail(String oldMail, String mail) {
-          if ( mails.contains(oldMail))
-               mails.remove(oldMail);
-
-          setMail(mail);
-     }
-
-     public void setGroup(String group) {
-          if (!groups.contains(group))
-               groups.add(group);
-     }
-
-     public Collection<String> getGroup() {
+     public ObjectData<String> getGroups() {
           return groups;
      }
 
-     public void replaceGroup(String oldGroup, String group) {
-          if (groups.contains(oldGroup))
-               groups.remove(oldGroup);
-
-          setGroup(group);
-     }
 }

@@ -15,15 +15,6 @@ public class SaveToFile implements Actions<String> {
     private static Logger logger = Logger.getLogger(SaveToFile.class.getName());
 
     @Override
-    public void showActionsInformation() {
-    }
-
-    @Override
-    public String readUserInput() {
-        return null;
-    }
-
-    @Override
     public void executeAction(String path) {
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(path));
@@ -32,8 +23,8 @@ public class SaveToFile implements Actions<String> {
                     .collect(Collectors.toList());
 
             lines.forEach(k -> {
-                pw.printf("\n%s;%s;%s;%s;%s", k.getId().toString(), k.getName(), k.getTels().toString().replaceAll("\\[|\\]", ""),
-                        k.getMails().toString().replaceAll("\\[|\\]", ""), k.getGroup().toString().replaceAll("\\[|\\]", ""));
+                pw.printf("\n%s;%s;%s;%s;%s", k.getId().toString(), k.getName(), k.getTels().getValue().toString().replaceAll("\\[|\\]", ""),
+                        k.getMails().getValue().toString().replaceAll("\\[|\\]", ""), k.getGroups().getValue().toString().replaceAll("\\[|\\]", ""));
             });
             pw.close();
             System.out.println("Список контактов успешно сохранен: " + path);

@@ -59,29 +59,29 @@ public class EditContact implements Actions<String> {
                          t.setName(userInput);
                     }
                     System.out.printf("\nВведите телефонный номер, который нужно заменить: %s\n",
-                              t.getTels().toString());
+                              t.getTels().getValue().toString());
                     userInput = scanner.nextLine();
 
                     if (!userInput.isEmpty() || !userInput.equals("-")) {
                          System.out.printf("\nВведите телефонный номер, который нужно добавить: ");
                          String newTel = scanner.nextLine();
-                         t.replaceTel(userInput, newTel);
+                         t.getTels().replaceValue(userInput, newTel);
                     }
-                    System.out.printf("\nВведите эл. почту, который нужно заменить: %s\n", t.getMails().toString());
+                    System.out.printf("\nВведите эл. почту, который нужно заменить: %s\n", t.getMails().getValue().toString());
                     userInput = scanner.nextLine();
 
                     if (!userInput.isEmpty() || !userInput.equals("-")) {
                          System.out.printf("\nВведите эл. почту, который нужно добавить: ");
                          String newEmail = scanner.nextLine();
-                         t.replaceMail(userInput, newEmail);
+                         t.getMails().replaceValue(userInput, newEmail);
                     }
-                    System.out.printf("\nВведите группу, который нужно заменить: %s\n", t.getGroup().toString());
+                    System.out.printf("\nВведите группу, который нужно заменить: %s\n", t.getGroups().getValue().toString());
                     userInput = scanner.nextLine();
 
                     if (!userInput.isEmpty() || !userInput.equals("-")) {
                          System.out.printf("\nВведите группу, который нужно добавить: ");
                          String newGroup = scanner.nextLine();
-                         t.replaceGroup(userInput, newGroup);
+                         t.getGroups().replaceValue(userInput, newGroup);
                     }
                } catch (Exception e) {
                     logger.log(Level.SEVERE, "Exception: ", e);

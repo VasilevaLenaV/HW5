@@ -45,7 +45,7 @@ public class FindContact implements Actions<Collection<Contact>> {
                 command.forEach(k -> {
                     System.out.printf("\nID: " + k.getId() + ", \nПолное имя: " + k.getName() + ", \nТелефон: "
                             + k.getTels().toString() + "\nЭл. почта: "
-                            + k.getMails().toString() + ", \nГруппы: " + k.getGroup().toString()
+                            + k.getMails().toString() + ", \nГруппы: " + k.getGroups().getValue().toString()
                             + "\n");
                 });
             }

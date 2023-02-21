@@ -7,6 +7,7 @@ import Data.ContactList;
 import Features.Actions;
 
 public class FullNameSorting implements Actions<String> {
+     @Override
      public void executeAction(String command) {
           List<Map.Entry<UUID, Contact>> entries = new ArrayList<>(ContactList.contacts.entrySet());
           Collections.sort(entries, new Comparator<Map.Entry<UUID, Contact>>() {
@@ -26,10 +27,5 @@ public class FullNameSorting implements Actions<String> {
           });
 
           System.out.println("Список контактов успешно отсортирован по ФИО");
-     }
-
-     @Override
-     public String readUserInput() {
-          return null;
      }
 }

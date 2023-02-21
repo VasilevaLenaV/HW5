@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +36,7 @@ public class AddContact implements Actions<String[]> {
      @Override
      public void executeAction(String[] command) {
           try {
-               Contact contact = Contact.buildContact(command[0], command[1], command[2], command[3]);
+               Contact contact = new Contact(command[0], command[1], command[2], command[3]);
                ContactList.contacts.put(contact.getId(), contact);
                logger.info(String.format("add contact %s", contact.getId()));
          } catch (Exception ex) {

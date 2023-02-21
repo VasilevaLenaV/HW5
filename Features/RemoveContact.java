@@ -11,8 +11,8 @@ import Data.ContactList;
 public class RemoveContact implements Actions<Collection<UUID>> {
      private static Logger logger = Logger.getLogger(RemoveContact.class.getName());
 
+     @Override
      public void showActionsInformation() {
-          System.out.println("");
           System.out.printf(
                     "\nДля удаление контакта ,введите  его данные и нажмите Ввод\n\nДля возрата к меню нажмите 0\n");
      }

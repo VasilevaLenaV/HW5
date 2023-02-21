@@ -12,10 +12,11 @@ public interface Actions<T> {
      public static final int EXIT = 0;
 
      public default void showActionsInformation(){
-
      };
 
-     public T readUserInput();
+     public default T readUserInput( ){
+          return null;
+     }
 
      public void executeAction(T command);
 }

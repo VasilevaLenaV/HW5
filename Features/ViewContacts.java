@@ -19,18 +19,13 @@ public class ViewContacts implements Actions<String> {
             if(ContactList.contacts.size()>0){
                 ContactList.contacts.forEach((key, contact) -> {
                     System.out.printf("\nID: " + key + ", \nПолное имя: " + contact.getName() + ", \nТелефон: "
-                            + contact.getTels().toString() + "\nЭл. почта: "
-                            + contact.getMails().toString() + ", \nГруппы: " + contact.getGroup().toString()
+                            + contact.getTels().getValue().toString() + "\nЭл. почта: "
+                            + contact.getMails().getValue().toString() + ", \nГруппы: " + contact.getGroups().getValue().toString()
                             + "\n");
                 });
             } 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Exception: ", e);
         }
-    }
-
-    @Override
-    public String readUserInput() {
-        return null;
     }
 }
